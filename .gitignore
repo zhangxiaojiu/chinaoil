@@ -10,3 +10,4 @@ wp.vim*
 .idea
 composer.lock
 /runtime
+/config/database.php
