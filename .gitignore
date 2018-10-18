@@ -1,5 +1,6 @@
 *~
 *.swp
+*.ini
 cscope*
 tags
 wp.vim*
@@ -11,3 +12,4 @@ wp.vim*
 composer.lock
 /runtime
 /config/database.php
+/static/upload
