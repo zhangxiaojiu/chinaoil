@@ -1,0 +1,12 @@
+*~
+*.swp
+cscope*
+tags
+wp.vim*
+.buildpath
+.DS_Store
+.project
+.settings
+.idea
+composer.lock
+/runtime
