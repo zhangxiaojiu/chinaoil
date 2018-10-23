@@ -108,3 +108,16 @@ function local_image($url)
 {
     return \service\FileService::download($url)['url'];
 }
+
+function pr($data,$b=false){
+    if($b){
+	echo "<br>";
+	print_r($data);
+	echo "</br>";
+	exit();
+    }else{
+	echo "<br>";
+	print_r($data);
+	echo "</br>";
+    }
+}

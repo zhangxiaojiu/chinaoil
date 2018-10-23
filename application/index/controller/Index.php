@@ -15,6 +15,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Db;
 
 /**
  * 应用入口控制器
@@ -25,6 +26,29 @@ class Index extends Controller
 
     public function index()
     {
-        $this->redirect('@admin/login');
+	$list = Db::name('StoreGoodsStation')->where(['is_deleted' => '0'])->limit(5)->select();
+	$this->assign('list',$list);
+	$this->assign('title', '首页');
+	return $this->fetch();
+    }
+    public function map()
+    {
+	$list = Db::name('StoreGoodsStation')->where(['is_deleted' => '0'])->select();
+	$this->assign('list',$list);
+	$this->assign('title', '加油');
+	return $this->fetch();
+    }
+    public function oil()
+    {
+	$id = input('param.0');
+	$info = Db::name('StoreGoodsStation')->where(['id' => $id])->find();
+	$this->assign('info',$info);
+	$this->assign('title', '加油');
+	return $this->fetch();
+    }
+    public function user()
+    {
+	$this->assign('title', '我的');
+	return $this->fetch();
     }
 }

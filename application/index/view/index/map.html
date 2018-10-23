@@ -1,0 +1,43 @@
+{include file="common/header"/}
+<div class='' style="height:800px;" id="pickmap"></div>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("pickmap");            
+    map.enableScrollWheelZoom(true);
+
+//根据list 列出油站
+{notempty name='list'}
+{foreach name='list' item='vo'}
+    var point = new BMap.Point({$vo.station_position|default=''});
+    var marker = new BMap.Marker(point,'{$vo.id|default=''}');  // 创建标注
+    map.addOverlay(marker);               // 将标注添加到地图中
+var content = "{$vo.station_title|default=''} <a href='{:url('index/oil',['id'=>$vo.id])}'>去加油</a>";
+    map.centerAndZoom("成都",12);
+    addClickHandler(content,marker);
+{/foreach}
+{else/}
+    map.centerAndZoom("成都",12);
+{/notempty}
+
+var opts = {
+    width : 250,     // 信息窗口宽度
+    height: 80,     // 信息窗口高度
+    title : "信息窗口" , // 信息窗口标题
+    enableMessage:true//设置允许信息窗发送短息
+};
+
+function addClickHandler(content,marker){
+    marker.addEventListener("click",function(e){
+	openInfo(content,e)}
+    );
+}
+function openInfo(content,e){
+    var p = e.target;
+    var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+    var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+    map.openInfoWindow(infoWindow,point); //开启信息窗口
+}
+</script>
+
+{include file="common/menu"/}
+{include file="common/footer"/}

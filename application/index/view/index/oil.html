@@ -1,0 +1,25 @@
+{include file="common/header"/}
+<h5 class='text-center layout text-orange'>
+    <span class="fa fa-ban" aria-hidden="true"></span>加油站内请勿下车使用手机
+</h5>
+<div class='layout text-muted'>
+    <span class="big-icon fa fa-product-hunt col-2 float-left" aria-hidden="true"></span>
+    <span class='col-6 float-left'>
+	你当前在
+	<br>{$info.station_title}
+    </span>
+    <a style="line-height:60px; color:orange;" href="{:url('index/map')}">更改油站</a>
+</div>
+<div class='layout text-muted'>
+    <span class="big-icon fa fa-jpy col-2 float-left" aria-hidden="true"></span>
+    <input class='oil-input col-9' placeholder="请输入金额" type='text'>
+</div>
+<div class='layout text-muted'>
+    <span class="big-icon fa fa-gift col-2 float-left" aria-hidden="true"></span>
+    <input class='oil-input col-9' placeholder="优惠10%" type='text' readonly>
+</div>
+<div class='layout'>
+    <button type="button" class="btn btn-warning btn-lg btn-block">付款</button>
+</div>
+{include file="common/menu"/}
+{include file="common/footer"/}

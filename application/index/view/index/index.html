@@ -1,0 +1,60 @@
+{include file="common/header"/}
+<blockquote>
+<img class='img-fluid' src='/static/theme/img/oil/banner.jpg'>
+</blockquote>
+<blockquote style='font-size:1rem;' class="container blockquote bg-white text-muted">
+    欢迎使用，如带来便利或优惠，请分享出去
+</blockquote>
+<div class='layout row index-menu'>
+    <div class='menu-div col-4 text-center'>
+	<span class="fa fa-car text-primary" aria-hidden="true"></span>
+	<br><span class='menu-text text-muted'>低价车险</span>
+    </div>
+    <div class='menu-div col-4 text-center'>
+	<span class="fa fa-truck text-success" aria-hidden="true"></span>
+	<br><span class='menu-text text-muted'>养车之家</span>
+    </div>
+    <div class='menu-div col-4 text-center'>
+	<span class="fa fa-scribd text-danger" aria-hidden="true"></span>
+	<br><span class='menu-text text-muted'>4S店保养</span>
+    </div>
+    <div class='menu-div col-4 text-center'>
+	<span class="fa fa-calculator text-orange" aria-hidden="true"></span>
+	<br><span class='menu-text text-muted'>车辆估价</span>
+    </div>
+    <div class='menu-div col-4 text-center'>
+	<span class="fa fa-cny text-orange" aria-hidden="true"></span>
+	<br><span class='menu-text text-muted'>车险分期购</span>
+    </div>
+    <div class='menu-div col-4 text-center'>
+	<span class="fa fa-wrench text-success" aria-hidden="true"></span>
+	<br><span class='menu-text text-muted'>汽车保养</span>
+    </div>
+    <div class='menu-div col-4 text-center'>
+	<span class="fa fa-warning text-danger" aria-hidden="true"></span>
+	<br><span class='menu-text text-muted'>违章查询</span>
+    </div>
+    <div class='menu-div col-4 text-center'>
+	<span class="fa fa fa-product-hunt text-primary" aria-hidden="true"></span>
+	<br><span class='menu-text text-muted'>智慧停车</span>
+    </div>
+    <div class='menu-div col-4 text-center'>
+	<span class="fa ffa fa-hourglass-1 text-primary" aria-hidden="true"></span>
+	<br><span class='menu-text text-muted'>敬请期待</span>
+    </div>
+</div>
+<blockquote style="display:none;" class='container blockquote bg-white text-muted'>
+    {foreach name='list' item='vo'}
+    <div class='oil-list'>
+	<img class='col-3 img-fluid' src="/static/theme/img/oil/icon.jpg">
+	<span class='col-9 float-right'>
+	    {$vo.station_title}
+	    <br><i><span class="fa fa-map-marker" aria-hidden="true"></span> 距离你100m</i>
+	</span>
+	<hr>
+    </div>
+    {/foreach}
+</blockquote>
+{include file="common/menu"/}
+{include file="common/footer"/}
+    
