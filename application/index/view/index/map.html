@@ -1,9 +1,71 @@
 {include file="common/header"/}
-<div class='' style="height:800px;" id="pickmap"></div>
+<div class='' style="height:600px;" id="pickmap"></div>
 <script type="text/javascript">
-    // 百度地图API功能
-    var map = new BMap.Map("pickmap");            
-    map.enableScrollWheelZoom(true);
+// 百度地图API功能
+var map = new BMap.Map("pickmap");            
+map.enableScrollWheelZoom(true);
+map.centerAndZoom("成都",14);
+
+//自定义图标
+function ComplexCustomOverlay(point, text){
+    this._point = point;
+    this._text = text;
+}
+ComplexCustomOverlay.prototype = new BMap.Overlay();
+ComplexCustomOverlay.prototype.initialize = function(map){
+    this._map = map;
+    var div = this._div = document.createElement("div");
+    div.style.position = "absolute";
+    div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+    div.style.backgroundColor = "#EE5D5B";
+    div.style.border = "1px solid #BC3B3A";
+    div.style.color = "white";
+    div.style.height = "18px";
+    div.style.lineHeight = "18px";
+    div.style.whiteSpace = "nowrap";
+    div.style.MozUserSelect = "none";
+    div.style.fontSize = "12px"
+    var span = this._span = document.createElement("span");
+    div.appendChild(span);
+    span.appendChild(document.createTextNode(this._text));      
+    var that = this;
+
+    var arrow = this._arrow = document.createElement("div");
+    arrow.style.background = "url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat";
+    arrow.style.position = "absolute";
+    arrow.style.width = "11px";
+    arrow.style.height = "10px";
+    arrow.style.top = "16px";
+    arrow.style.left = "10px";
+    arrow.style.overflow = "hidden";
+    div.appendChild(arrow);
+
+    map.getPanes().labelPane.appendChild(div);
+
+    return div;
+}
+ComplexCustomOverlay.prototype.draw = function(){
+    var map = this._map;
+    var pixel = map.pointToOverlayPixel(this._point);
+    this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
+    this._div.style.top  = pixel.y - 30 + "px";
+}
+
+//定位
+var geolocation = new BMap.Geolocation();
+geolocation.getCurrentPosition(function(r){
+    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+	p1 = r.point;	//规划路线用
+	var mk = new BMap.Marker(r.point);
+	var myCompOverlay = new ComplexCustomOverlay(r.point, "我的位置");
+	map.addOverlay(myCompOverlay);
+	map.panTo(r.point);
+	//alert('您的位置：'+r.point.lng+','+r.point.lat);
+    }
+    else {
+	//alert('failed'+this.getStatus());
+    }        
+},{enableHighAccuracy: true})
 
 //根据list 列出油站
 {notempty name='list'}
@@ -11,12 +73,9 @@
     var point = new BMap.Point({$vo.station_position|default=''});
     var marker = new BMap.Marker(point,'{$vo.id|default=''}');  // 创建标注
     map.addOverlay(marker);               // 将标注添加到地图中
-var content = "{$vo.station_title|default=''} <a href='{:url('index/oil',['id'=>$vo.id])}'>去加油</a>";
-    map.centerAndZoom("成都",12);
+var content = "{$vo.station_title|default=''}　<a class='btn btn-warning' href='{:url('index/oil',['id'=>$vo.id])}'>去加油</a>　<button onclick='goHere({$vo.station_position|default=''})' class='btn btn-success'>路线</button>";
     addClickHandler(content,marker);
 {/foreach}
-{else/}
-    map.centerAndZoom("成都",12);
 {/notempty}
 
 var opts = {
@@ -36,6 +95,13 @@ function openInfo(content,e){
     var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
     var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
     map.openInfoWindow(infoWindow,point); //开启信息窗口
+}
+
+function goHere(l1,l2){
+    var p2 = new BMap.Point(l1,l2);
+    var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});
+    map.clearOverlays();
+    driving.search(p1, p2);
 }
 </script>
 
