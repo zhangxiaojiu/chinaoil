@@ -99,7 +99,7 @@ function openInfo(content,e){
 
 function goHere(l1,l2){
     var p2 = new BMap.Point(l1,l2);
-    var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});
+    var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true,enableDragging : true}});
     map.clearOverlays();
     driving.search(p1, p2);
 }
