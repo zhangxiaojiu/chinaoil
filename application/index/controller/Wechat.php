@@ -148,13 +148,13 @@ class Wechat extends Controller
                     if(empty($info['user_id'])) {
                         $uid = Db::name('WechatFans')->insertGetId($data);
 
-                        $uInfo = Db::name('user')->find($uid);
+                        $uInfo = Db::name('WechatFans')->find($uid);
                     }else{
                         $data['id'] = $info['id'];
                         Db::name('WechatFans')->update($data);
                         $uInfo = Db::name('WechatFans')->find($info['id']);
                     }
-                    session('user',$uInfo);
+                    session('wechat',$uInfo);
                 }else{
                     $data['id'] = session('user')['id'];
                     Db::name('WechatFans')->update($data);

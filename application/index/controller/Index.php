@@ -25,7 +25,7 @@ class Index extends Controller
 {
     public function initialize()
     {
-//	$this->checkLogin();
+	$this->checkLogin();
     }
 
     public function checkLogin(){
@@ -63,6 +63,9 @@ class Index extends Controller
     }
     public function user()
     {
+	$uid = get_current_user_id();
+	$info = Db::name('WechatFans')->find($uid);
+	$this->assign('info',$info);
 	$this->assign('title', '我的');
 	return $this->fetch();
     }

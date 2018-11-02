@@ -1,7 +1,11 @@
 {include file="common/header"/}
 <div class='layout bg-orange user-top'>
+    {empty name="info['headimgurl']"}
     <img src='/static/theme/img/headimg.png'>
-    <h5 class='text-center text-muted'>我的昵称</h5>
+    {else/}
+    <img src='{$info.headimgurl}'>
+    {/empty}
+    <h5 class='text-center text-muted'>{$info.nickname}</h5>
 </div>
 <div class='layout'>
     <div class='user-line text-muted'>

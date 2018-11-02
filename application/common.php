@@ -144,7 +144,7 @@ function request_get($url = '')
  */
 function get_current_user_id()
 {
-    $sessionUserId = session('user.id');
+    $sessionUserId = session('wechat.id');
     if (empty($sessionUserId)) {
         return 0;
     }
