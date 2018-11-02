@@ -128,53 +128,38 @@ class Wechat extends Controller
         if($code) {
             $state = isset($_GET['state'])?$_GET['state']:0;//传递参数用
             $ret = WxService::getAccessToken($code);
-	    pr($ret,1);
             if (isset($ret['errcode'])) {
-                p($ret, 0);
+                pr($ret, 0);
             } else {
                 $data['access_token'] = $ret['access_token'];
-                $data['expire_time'] = time() + $ret['expires_in'];
+                $data['expire_in'] = time() + $ret['expires_in'];
 
                 $userRet = WxService::getUserInfo($data['access_token'],$ret['openid']);
                 $data['openid'] = $userRet['openid'];
                 $data['nickname'] = $userRet['nickname'];
-                $data['union_id'] = isset($userRet['unionid'])?$userRet['unionid']:'';
-                //本地用户数据
-                $userData['sex'] = $userRet['sex'];
-                $userData['avatar'] = $userRet['headimgurl'];
-                $userData['user_nickname'] = $userRet['nickname'];
-                $userData['last_login_time'] = time();
+                $data['unionid'] = isset($userRet['unionid'])?$userRet['unionid']:'';
+                $data['sex'] = $userRet['sex'];
+                $data['headimgurl'] = $userRet['headimgurl'];
+                $data['nickname'] = $userRet['nickname'];
 
-                $info = Db::name('third_party_user')->where(['openid' => $data['openid']])->find();
+                $info = Db::name('WechatFans')->where(['openid' => $data['openid']])->find();
 
                 if(empty(session('user')['id'])){
                     if(empty($info['user_id'])) {
-                        $userData['pid'] = $state;
-                        $userData['user_type'] = 2;
-                        $userData['user_status'] = 1;
-                        $userData['create_time'] = time();
-                        $uid = Db::name('user')->insertGetId($userData);
-                        $data['user_id'] = $uid;
+                        $uid = Db::name('WechatFans')->insertGetId($data);
 
                         $uInfo = Db::name('user')->find($uid);
                     }else{
-                        $userData['id'] = $info['user_id'];
-                        Db::name('user')->update($userData);
-                        $uInfo = Db::name('user')->find($info['user_id']);
+                        $data['id'] = $info['id'];
+                        Db::name('WechatFans')->update($data);
+                        $uInfo = Db::name('WechatFans')->find($info['id']);
                     }
                     session('user',$uInfo);
                 }else{
-                    $data['user_id'] = session('user')['id'];
-                    $userData['id'] = session('user')['id'];
-                    Db::name('user')->update($userData);
+                    $data['id'] = session('user')['id'];
+                    Db::name('WechatFans')->update($data);
                 }
 
-
-                if (empty($info)) {
-                    Db::name('third_party_user')->insert($data);
-                } else {
-                    Db::name('third_party_user')->where(['openid' => $data['openid']])->update($data);
-                }
                 $this->redirect('/');
             }
         }else{

@@ -121,3 +121,33 @@ function pr($data,$b=false){
 	echo "</br>";
     }
 }
+/**
+ * 发送get请求
+ * @param string $url
+ * @return bool|mixed
+ */
+function request_get($url = '')
+{
+    if (empty($url)) {
+        return false;
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    return json_decode($data,true);
+}
+/**
+ * 获取当前登录前台用户id
+ * @return int
+ */
+function get_current_user_id()
+{
+    $sessionUserId = session('user.id');
+    if (empty($sessionUserId)) {
+        return 0;
+    }
+
+    return $sessionUserId;
+}

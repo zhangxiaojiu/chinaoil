@@ -23,6 +23,21 @@ use think\Db;
  */
 class Index extends Controller
 {
+    public function initialize()
+    {
+//	$this->checkLogin();
+    }
+
+    public function checkLogin(){
+	$userId = get_current_user_id();
+        if (empty($userId)) {
+            if ($this->request->isAjax()) {
+                $this->error("您尚未登录", url("wechat/auth"));
+            } else {
+                $this->redirect(url("wechat/auth"));
+            }
+        } 
+    }
 
     public function index()
     {
