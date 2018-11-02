@@ -132,7 +132,7 @@ class Wechat extends Controller
                 pr($ret, 0);
             } else {
                 $data['access_token'] = $ret['access_token'];
-                $data['expire_in'] = time() + $ret['expires_in'];
+                $data['expires_in'] = time() + $ret['expires_in'];
 
                 $userRet = WxService::getUserInfo($data['access_token'],$ret['openid']);
                 $data['openid'] = $userRet['openid'];
