@@ -151,3 +151,9 @@ function get_current_user_id()
 
     return $sessionUserId;
 }
+function trimall($str)
+{
+    $oldchar=array(" ","　","\t","\n","\r");
+    $newchar=array("","","","","");
+    return str_replace($oldchar,$newchar,$str);
+}

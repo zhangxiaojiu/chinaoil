@@ -1,0 +1,30 @@
+{include file="common/header"/}
+
+<div class="top-bar">加油记录</div>
+<div class="mt50"></div>
+
+<div class="carpet">
+    <div class="top-line">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>油卡</th>
+                <th>金额</th>
+                <th>油量</th>
+            </tr>
+            </thead>
+            <tbody>
+		{foreach name='list' item='vo'}
+		<tr>
+		    <td>{$vo.card_number}</td>
+		    <td>{$vo.cash}</td>
+		    <td>{$vo.capacity}</td>
+		</tr>
+		{/foreach}
+	    </tbody>
+        </table>
+    </div>
+    {:html_entity_decode($page)}
+</div>
+{include file="common/menu"/}
+{include file="common/footer"/}

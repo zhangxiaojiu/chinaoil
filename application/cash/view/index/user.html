@@ -1,0 +1,30 @@
+{include file="common/header"/}
+<!-- top bar -->
+<div class="top-bar">
+    <a href="{:url('public/logout')}"><span class="glyphicon glyphicon-off fl"></span></a>
+    <a href="#"><span class="glyphicon glyphicon-share fr"></span></a>
+</div>
+<div class="mt50"></div>
+<div class="user-top">
+    <h3>{$info.station}<br><br>{$info.username}</h3>
+</div>
+<!-- end top bar -->
+
+<div class="carpet">
+    <a href="#"><span class="fa fa-users"></span>　我的好友</a>
+    <hr>
+    {foreach name='clist' item='vo'}
+    {$vo.username} <i class='fr'>{$vo.station}</i><br>
+{/foreach}
+</div>
+<div class='carpet'>
+    <a href="{:url('index/oil')}"><span class="fa fa-beer"></span>　加油记录</a>
+    <hr>
+</div>
+
+<div class="carpet">
+    <a href="{:url('login/logout')}"><span class="fa fa-power-off"></span>　退出</a>
+</div>
+
+{include file="common/menu"/}
+{include file="common/footer"/}

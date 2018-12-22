@@ -1,0 +1,25 @@
+<form autocomplete="off" class="layui-form layui-box modal-form-box" action="{:request()->url()}" data-auto="true" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">流水号</label>
+        <div class="layui-input-block">
+            <input name="trade_id" readonly disabled value='{$vo.trade_id|default=""}' required="required" title="请输入油卡号" placeholder="请输入油卡号" class="layui-input layui-bg-gray">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户手机号</label>
+        <div class="layui-input-block">
+            <input name="user_phone" value='{$vo.user_phone|default=""}' title="请输入油卡金额" placeholder="请输入油卡金额" class="layui-input">
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item text-center">
+        {if isset($vo['id'])}<input type='hidden' value='{$vo.id}' name='id'>{/if}
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+    <script>window.form.render();</script>
+</form>

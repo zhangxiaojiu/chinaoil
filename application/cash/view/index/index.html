@@ -1,0 +1,43 @@
+{include file="common/header"/}
+
+<div class="top-bar">我的钱包</div>
+<div class="mt50"></div>
+<div class="user-top">
+    <h1 class="pt10">￥{$info.cash}</h1>
+    当前余额(元)
+    <div class="carpet" style="color:#00afec">
+	<div class="one-from-three right-line tac">¥{$total.day}<br>昨日返现</div></a>
+        <div class="one-from-three right-line tac">¥{$total.month}0<br>当月返现</div></a>
+        <div class="one-from-three tac">¥{$total.all}0<br>累计返现</div></a>
+    </div>
+</div>
+
+<div class="carpet" style="margin-top:40px;">
+    <a href="{:url('index/withdraw')}"><button type="button" class="btn btn-lg btn-info w100">提现</button></a>
+</div>
+
+<div class="carpet">
+    <h5>资金记录：</h5>
+    <div class="top-line">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>金额</th>
+                <th>备注</th>
+                <th>日期</th>
+	    </tr>
+            </thead>
+            <tbody>
+		{foreach name='list' item='vo'}
+		<tr>
+		    <td>{$vo.cash}</td>
+		    <td>{$vo.remark}</td>
+		    <td>{$vo.time}</td>
+		</tr>
+		{/foreach}
+	    </tbody>
+        </table>
+	{:html_entity_decode($list->render())}
+    </div>
+{include file="common/menu"/}
+{include file="common/footer"/}
