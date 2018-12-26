@@ -61,6 +61,7 @@ class Index extends Controller
 	$this->assign('title','加油记录');
 	$user_id= session('cashuser.id');
 	$res_card = Db::name('cash_card')->where(['user_id'=>$user_id])->select();
+	$arr_card = [];
 	foreach($res_card as $v){
 	    $arr_card[] = $v['number'];
 	}
