@@ -116,7 +116,7 @@ class AdminTrade extends BasicAdmin
 	    //echo $highestRow.$highestColumn;
 	    // 一次读取一列
 	    $res = array();
-	    $agent = [0=>'trade_id',1=>'card_number',5=>'cash',9=>'trade_time',10=>'trade_at',12=>'oil_type',13=>'capacity',14=>'user_phone'];
+	    $agent = [0=>'trade_id',1=>'card_number',5=>'cash',9=>'trade_time',10=>'trade_at',12=>'oil_type',13=>'capacity'];
 	    for ($row = 2; $row <= $highestRow; $row++) {
 		$f = 0;
 		for ($column = 0; $column <=14; $column++) {
@@ -124,7 +124,7 @@ class AdminTrade extends BasicAdmin
 		    if($val == ''){
 			$f++;
 		    }
-		    if(in_array($column,[0,1,5,9,10,12,13,14])){
+		    if(in_array($column,[0,1,5,9,10,12,13])){
 			$res[$row-2][$agent[$column]] = htmlspecialchars($val);
 		    }
 		}

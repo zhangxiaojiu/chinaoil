@@ -42,12 +42,15 @@ function cash_get_child_list($id){
     return $list;
 }
 function cash_do_return($trade){
-    $phone = $trade['user_phone'];
-    $info = Db::name('CashUser')->where(['username'=>$phone])->find();
+    $card_user_id = Db::name('CashCard')->where(['number'=>$trade['card_number']])->value('user_id');
+    if(!$card_user_id){
+	return 1;
+    }
+    $info = Db::name('CashUser')->where(['id'=>$card_user_id])->find();
     if($info){
 	$mymoney = round($trade['cash']*0.05,2);
 	$data = [
-	    'user_phone' => $phone,
+	    'user_phone' => $info['username'],
 	    'type'  => 'return',
 	    'cash' => $mymoney,
 	    'remark' => "流水号:".$trade['trade_id']."返现",
@@ -55,7 +58,7 @@ function cash_do_return($trade){
 	    'status' => 1
 	];
 	Db::name('CashLog')->insert($data);
-	Db::name('CashUser')->where(['username'=>$phone])->setInc('cash',$mymoney);
+	Db::name('CashUser')->where(['username'=>$info['username']])->setInc('cash',$mymoney);
 
 	$pinfo = Db::name('CashUser')->find($info['pid']);
 	if($pinfo){

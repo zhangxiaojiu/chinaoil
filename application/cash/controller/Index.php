@@ -59,8 +59,12 @@ class Index extends Controller
     }
     public function oil(){
 	$this->assign('title','加油记录');
-	$user_phone = session('cashuser.username');
-	$list = Db::name('cash_trade')->where(['user_phone'=>$user_phone])->order('id desc')->paginate(10);
+	$user_id= session('cashuser.id');
+	$res_card = Db::name('cash_card')->where(['user_id'=>$user_id])->select();
+	foreach($res_card as $v){
+	    $arr_card[] = $v['number'];
+	}
+	$list = Db::name('cash_trade')->where('card_number','in',$arr_card)->order('id desc')->paginate(10);
 	$page = $list->render();
 	$this->assign('list',$list);
 	$this->assign('page',$page);
