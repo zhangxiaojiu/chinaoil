@@ -1,0 +1,30 @@
+<form class="layui-form layui-box modal-form-box" action="{:request()->url()}" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">起始油卡号</label>
+        <div class="layui-input-block">
+            <input name="begin" value='{$vo.number|default=""}' required="required" title="请输入油卡号" placeholder="请输入油卡号" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+	<label class="layui-form-label">增加数量</label>
+	<div class='layui-input-block'>
+	    <input name='num' value='1' placeholder="请输入增加数量" class="layui-input">
+	</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">卡金额</label>
+        <div class="layui-input-block">
+            <input name="cash" value='{$vo.station|default=""}' title="请输入油卡金额" placeholder="请输入油卡金额" class="layui-input">
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+    <script>window.form.render();</script>
+</form>

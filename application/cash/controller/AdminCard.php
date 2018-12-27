@@ -84,6 +84,31 @@ class AdminCard extends BasicAdmin
         return $this->_form($this->table, 'form');
     }
 
+    public function addmore(){
+	if($this->request->isPost()){
+	    $begin = input('param.begin','');
+	    $number = input('param.num','');
+	    $cash = input('param.cash','');
+	    if(!is_numeric($begin)){
+		$this->error('起始卡号不正确');
+	    }
+	    for($i=0;$i<$number;$i++){
+		$arr = [
+		    'number' => $begin+$i,
+		    'cash' => $cash
+		];
+		if(!Db::name('CashCard')->where(['number'=>$arr['number']])->find()){
+		    $data[] = $arr;
+		}
+	    }
+	    Db::name('CashCard')->insertAll($data);
+	    $this->success('添加成功');
+	}
+	else{
+	    return $this->_form($this->table,'addmore');
+	}
+    }
+
     /**
      * 用户编辑
      * @return array|string
@@ -133,21 +158,22 @@ class AdminCard extends BasicAdmin
     public function _form_filter(&$data)
     {
 	if ($this->request->isPost()) {
-	    $data['number'] = trimall($data['number']);
-	    
+	    if(isset($data['number'])){
+		$data['number'] = trimall($data['number']);
+		if (Db::name($this->table)->where(['number' => $data['number']])->count() > 0) {
+		    $this->error('油卡号已经存在，请使用其它账号！');
+		}
+	    }
             if (isset($data['authorize']) && is_array($data['authorize'])) {
                 $data['authorize'] = join(',', $data['authorize']);
             } else {
                 $data['authorize'] = '';
             }
-            if (isset($data['id'])) {
-            } elseif (Db::name($this->table)->where(['number' => $data['number']])->count() > 0) {
-                $this->error('油卡号已经存在，请使用其它账号！');
-            }
-        } else {
-            $data['authorize'] = explode(',', isset($data['authorize']) ? $data['authorize'] : '');
-            $this->assign('authorizes', Db::name('SystemAuth')->where(['status' => '1'])->select());
-        }
+	}
+	else {
+	    $data['authorize'] = explode(',', isset($data['authorize']) ? $data['authorize'] : '');
+	    $this->assign('authorizes', Db::name('SystemAuth')->where(['status' => '1'])->select());
+	}
     }
 
     /**
