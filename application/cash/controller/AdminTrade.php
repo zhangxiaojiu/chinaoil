@@ -46,8 +46,8 @@ class AdminTrade extends BasicAdmin
     public function index()
     {
         $this->title = '交易列表';
-        list($get, $db) = [$this->request->get(), Db::name($this->table)];
-        foreach (['number'] as $key) {
+        list($get, $db) = [$this->request->get(), Db::name($this->table)->order('status asc,id')];
+        foreach (['card_number'] as $key) {
             (isset($get[$key]) && $get[$key] !== '') && $db->whereLike($key, "%{$get[$key]}%");
         }
         if (isset($get['date']) && $get['date'] !== '') {

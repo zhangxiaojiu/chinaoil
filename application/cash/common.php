@@ -48,7 +48,7 @@ function cash_do_return($trade){
     }
     $info = Db::name('CashUser')->where(['id'=>$card_user_id])->find();
     if($info){
-	$mymoney = round($trade['cash']*0.05,2);
+	$mymoney = round($trade['cash']*$info['scale'],2);
 	$data = [
 	    'user_phone' => $info['username'],
 	    'type'  => 'return',
