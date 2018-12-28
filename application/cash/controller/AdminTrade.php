@@ -128,14 +128,24 @@ class AdminTrade extends BasicAdmin
 			$res[$row-2][$agent[$column]] = htmlspecialchars($val);
 		    }
 		}
+		//空数据
 		if($f >2){
+		    unset($res[$row-2]);
+		}
+		//重复流水号
+		$tradeId = $res[$row-2]['trade_id'];
+		if(Db::name('CashTrade')->where(['trade_id'=>$tradeId])->find()){
 		    unset($res[$row-2]);
 		}
 	    }
 	    if(!empty($res)){
 		if(Db::name($this->table)->insertAll($res)){
 		    $this->success('导入成功');
+		}else{
+		    $this->error('导入失败！');
 		}
+	    }else{
+		$this->error('禁止重复导入！');
 	    }
 	}else{
 	    return $this->_form($this->table, 'import');

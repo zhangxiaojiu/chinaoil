@@ -10,10 +10,16 @@
             {/if}
         </div>
     </div>
+    <div class="layui-form-item">
+	<label class="layui-form-label">返现比例</label>
+	<div class="layui-input-block">
+	    <input name="scale" value='{$vo.scale|default=""}' title="请输入返现比例" placeholder="请输入返现比例" class="layui-input">
+	</div>
+    </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">所属油站</label>
-        <div class="layui-input-block">
+	<label class="layui-form-label">所属油站</label>
+	<div class="layui-input-block">
             <input name="station" value='{$vo.station|default=""}' title="请输入所属油站" placeholder="请输入所属油站" class="layui-input">
         </div>
     </div>
