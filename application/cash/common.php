@@ -80,3 +80,11 @@ function cash_do_return($trade){
     }
     return 1;
 }
+function cash_get_user_card($user_id){
+    $arr_card = [];
+    $res_card = Db::name('cash_card')->where(['user_id'=>$user_id])->select();
+    foreach($res_card as $v){
+	$arr_card[] = $v['number'];
+    }
+    return $arr_card;
+}

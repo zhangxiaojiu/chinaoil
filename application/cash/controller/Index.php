@@ -34,7 +34,8 @@ class Index extends Controller
 	$this->assign('info',$info);
 
 	$list = Db::name('CashLog')->where(['user_phone'=>session('cashuser.username')])->order('id desc')->paginate(5);
-	$total['all'] = Db::name('CashLog')->where(['user_phone'=>session('cashuser.username')])->sum('cash');
+	$arr_card = cash_get_user_card($info['id']);
+	$total['day_trade'] = Db::name('CashTrade')->where('card_number','in',$arr_card)->where('trade_time','like',date('Y-m-d',time()-24*3600).'%')->sum('cash');
 	$total['month'] = Db::name('CashLog')->where([
 	    'user_phone'=>session('cashuser.username')])->where(
 	    'time','like',date('Y-m',time()).'%'
@@ -60,13 +61,7 @@ class Index extends Controller
     public function oil(){
 	$this->assign('title','加油记录');
 	$user_id= session('cashuser.id');
-	$res_card = Db::name('cash_card')->where(['user_id'=>$user_id])->select();
-	$arr_card = [];
-	foreach($res_card as $v){
-	    $arr_card[] = $v['number'];
-	}
-	//$where['card_number'] = ['in',$arr_card];
-	$where['trade_time'] = ['like',date('Y-m',time()).'%'];
+	$arr_card = cash_get_user_card($user_id);
 	$list = Db::name('cash_trade')->where('card_number','in',$arr_card)->where('trade_time','like',date('Y-m').'%')->order('trade_time desc')->paginate(10);
 	$page = $list->render();
 	$this->assign('list',$list);
