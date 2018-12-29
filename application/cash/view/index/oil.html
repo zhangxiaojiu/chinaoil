@@ -11,6 +11,7 @@
                 <th>油卡</th>
                 <th>金额</th>
                 <th>油量</th>
+                <th>时间</th>
             </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
 		    <td>{$vo.card_number}</td>
 		    <td>{$vo.cash}</td>
 		    <td>{$vo.capacity}</td>
+		    <td>{:substr($vo.trade_time,5,5)}</td>
 		</tr>
 		{/foreach}
 	    </tbody>
