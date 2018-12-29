@@ -65,7 +65,9 @@ class Index extends Controller
 	foreach($res_card as $v){
 	    $arr_card[] = $v['number'];
 	}
-	$list = Db::name('cash_trade')->where('card_number','in',$arr_card)->order('id desc')->paginate(10);
+	//$where['card_number'] = ['in',$arr_card];
+	$where['trade_time'] = ['like',date('Y-m',time()).'%'];
+	$list = Db::name('cash_trade')->where('card_number','in',$arr_card)->where('trade_time','like',date('Y-m').'%')->order('trade_time desc')->paginate(10);
 	$page = $list->render();
 	$this->assign('list',$list);
 	$this->assign('page',$page);
