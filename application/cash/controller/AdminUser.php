@@ -56,6 +56,21 @@ class AdminUser extends BasicAdmin
         return parent::_list($db->where([]));
     }
 
+    public function turnover(){
+	$this->title = '用户流水';
+	$ulist = Db::name('CashUser')->where('status',1)->select();
+	$date = input('param.date',date('Y-m-d'));
+	foreach($ulist as $v){
+	    $u_cards =  cash_get_user_card($v['id']);
+	    $turnover = Db::name('CashTrade')->where('card_number','in',$u_cards)->where('trade_time','like',$date.'%')->sum('cash');
+	    $row['name'] = $v['username'];
+	    $row['time'] = $date;
+	    $row['turnover'] = $turnover;
+	    $res[] = $row;
+	}
+	$this->assign('res',$res);
+	return parent::_list();
+    }
     /**
      * 授权管理
      * @return array|string

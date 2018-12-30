@@ -1,0 +1,58 @@
+{extend name='admin@public/content'}
+
+
+{block name="content"}
+
+<!-- 表单搜索 开始 -->
+<form autocomplete="off" class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get">
+
+    <div class="layui-form-item layui-inline">
+        <label class="layui-form-label">流水时间</label>
+        <div class="layui-input-inline">
+            <input name="date" value="{$Think.get.date|default=''}" placeholder="请输入时间" class="layui-input">
+        </div>
+    </div>
+  
+    <div class="layui-form-item layui-inline">
+        <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+    </div>
+
+</form>
+<script>
+    window.laydate.render({range: true, elem: '#range-date'});
+</script>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="true" method="post">
+    <!--{empty name='res'}-->
+    <p class="help-block text-center well">没 有 记 录 哦！</p>
+    <!--{else}-->
+    <input type="hidden" value="resort" name="action">
+    <table class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th class='text-left nowrap'>用户名</th>
+            <th class='text-left nowrap'>流水</th>
+            <th class='text-left nowrap'>时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--{foreach $res as $key=>$vo}-->
+        <tr>
+	    <td class='text-left nowrap'>
+                {$vo.name}
+            </td>
+            <td class='text-left nowrap'>
+                ¥{$vo.turnover}
+            </td>
+            <td class='text-left nowrap'>
+                {$vo.time}
+            </td>
+        </tr>
+        <!--{/foreach}-->
+        </tbody>
+    </table>
+    {if isset($page)}<p>{$page|raw}</p>{/if}
+    <!--{/empty}-->
+</form>
+{/block}
