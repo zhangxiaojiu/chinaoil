@@ -206,6 +206,24 @@ class AdminCard extends BasicAdmin
         }
         $this->error('失败，请稍候再试！');
     }
+    public function assignmore(){
+	if ($this->request->isGet()) {
+	    $ulist = cash_get_active_users();
+	    $this->assign('ulist', $ulist);
+            return $this->_form($this->table, 'assignmore');
+        }
+	$post = $this->request->post();
+	$arr_card = explode(',',$post['numbers']);
+	foreach($arr_card as $k=>$v){
+	    $arr_card[$k] = trim($v); 
+	}
+	$res = Db::name($this->table)->where('number','in',$arr_card)->setField('user_id',$post['user_id']);
+	$sql = Db::name($this->table)->getLastSql();
+        if ($res) {
+            $this->success('分配成功！'.$res.'条！', '');
+        }
+        $this->error('失败，请稍候再试！');
+    }
 
     /**
      * 用户禁用

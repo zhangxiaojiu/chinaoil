@@ -111,14 +111,14 @@ function local_image($url)
 
 function pr($data,$b=false){
     if($b){
-	echo "<br>";
+	echo "<pre>";
 	print_r($data);
-	echo "</br>";
+	echo "</pre>";
 	exit();
     }else{
-	echo "<br>";
+	echo "<pre>";
 	print_r($data);
-	echo "</br>";
+	echo "</pre>";
     }
 }
 /**

@@ -1,0 +1,29 @@
+<form autocomplete="off" class="layui-form layui-box modal-form-box" action="{:request()->url()}" data-auto="true" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">油卡号</label>
+        <div class="layui-input-block">
+            <input name="numbers" value='{$vo.number|default=""}' required="required" title="请输入油卡号,多个用 英文','隔开 " placeholder="请输入油卡号，多个用 英文','隔开 " class="layui-input">
+	</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">分配用户</label>
+        <div class="layui-input-block">
+	    <select name='user_id' class='layui-select' style="display:block;width:100%;">
+		<!--{foreach $ulist as $k=>$v}-->
+		<option value='{$k}'>{$v}</option>
+		<!--{/foreach}-->
+	    </select>
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>保存数据</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+    </div>
+
+</form>
+
