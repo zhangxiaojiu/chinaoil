@@ -35,7 +35,7 @@ class Index extends Controller
 
 	$list = Db::name('CashLog')->where(['user_phone'=>session('cashuser.username')])->order('id desc')->paginate(5);
 	$arr_card = cash_get_user_card($info['id']);
-	$total['day_trade'] = Db::name('CashTrade')->where('card_number','in',$arr_card)->where('trade_time','like',date('Y-m-d',time()-24*3600).'%')->sum('cash');
+	$total['day_trade'] = Db::name('CashTrade')->where('card_number','in',$arr_card)->where('trade_time','like',date('Y-m-d',time()).'%')->sum('cash');
 	$total['month'] = Db::name('CashLog')->where([
 	    'user_phone'=>session('cashuser.username')])->where(
 	    'time','like',date('Y-m',time()).'%'

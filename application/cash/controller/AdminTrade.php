@@ -131,11 +131,12 @@ class AdminTrade extends BasicAdmin
 		//空数据
 		if($f >2){
 		    unset($res[$row-2]);
-		}
-		//重复流水号
-		$tradeId = $res[$row-2]['trade_id'];
-		if(Db::name('CashTrade')->where(['trade_id'=>$tradeId])->find()){
-		    unset($res[$row-2]);
+		}else{
+		    //重复流水号
+		    $tradeId = $res[$row-2]['trade_id'];
+		    if(Db::name('CashTrade')->where(['trade_id'=>$tradeId])->find()){
+			unset($res[$row-2]);
+		    }
 		}
 	    }
 	    if(!empty($res)){
