@@ -42,7 +42,7 @@ class Index extends Controller
 	)->sum('cash');
 	$total['day'] = Db::name('CashLog')->where([
 	    'user_phone'=>session('cashuser.username')])->where(
-	    'time','like',date('Y-m-d',time()-24*3600).'%'
+	    'time','like',date('Y-m-d',time()).'%'
 	)->sum('cash');
 
 	$this->assign('total',$total);
